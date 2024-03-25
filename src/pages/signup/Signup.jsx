@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-
-import { piecesApi } from "../../api/api";
-
+// React
+import { useState, useEffect } from "react";
+// Component
 import NavBar2 from "../../components/NavBar2";
 import SignupForm from "./SignupForm";
+
+import { piecesApi } from "../../api/api";
 
 const Signup = () => {
   const [backgroundImg, setBackgroundImg] = useState();
@@ -18,7 +19,7 @@ const Signup = () => {
   }, []);
 
   return (
-    <React.Fragment>
+    <>
       <NavBar2 />
       <section className="relative">
         {/* 배경 이미지 */}
@@ -36,10 +37,11 @@ const Signup = () => {
             }}
           ></div>
         )}
+
         {/* 회원가입 폼 */}
         <SignupForm />
       </section>
-    </React.Fragment>
+    </>
   );
 };
 
