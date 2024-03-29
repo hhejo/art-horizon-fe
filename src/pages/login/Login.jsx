@@ -8,14 +8,13 @@ import LoginForm from "./LoginForm";
 const Login = () => {
   const [backgroundImg, setBackgroundImg] = useState();
 
-  useEffect(() => {
-    // 배경 그림 가져오기
-    const fetchBackgroundImg = async () => {
-      const res = await piecesApi.getBackgroundImage();
-      setBackgroundImg(res.data.pieceImg);
-    };
-    fetchBackgroundImg();
-  }, []);
+  // useEffect(() => {
+  //   const fetchBackgroundImg = async () => {
+  //     const res = await piecesApi.getBackgroundImage();
+  //     setBackgroundImg(res.data.pieceImg);
+  //   };
+  //   fetchBackgroundImg(); // 배경 그림 가져오기
+  // }, []);
 
   return (
     <React.Fragment>

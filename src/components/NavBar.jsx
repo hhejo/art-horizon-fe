@@ -13,9 +13,11 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const {
     isLoggedIn,
-    mySeq: userSeq,
-    myNickname,
+    // mySeq: userSeq,
+    // myNickname,
   } = useSelector((state) => state.auth);
+  const myNickname = "hejo";
+  const userSeq = 1;
 
   const logoutHandler = () => {
     dispatch(logout());

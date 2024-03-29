@@ -15,29 +15,31 @@ const initialState = {
 export const getUser = createAsyncThunk(
   "authSlice/getUser",
   async (_, { rejectWithValue, getState }) => {
-    // const isLoggedIn = getState().auth.isLoggedIn;
-    // if (!isLoggedIn) {
-    //   return rejectWithValue();
+    return {};
+    // // const isLoggedIn = getState().auth.isLoggedIn;
+    // // if (!isLoggedIn) {
+    // //   return rejectWithValue();
+    // // }
+    // try {
+    //   const res = await authApi.getUser();
+    //   return res.data;
+    // } catch (err) {
+    //   return rejectWithValue(JSON.parse(err));
     // }
-    try {
-      const res = await authApi.getUser();
-      return res.data;
-    } catch (err) {
-      return rejectWithValue(JSON.parse(err));
-    }
   }
 );
 
 export const login = createAsyncThunk(
   "authSlice/login",
   async (credentials, { rejectWithValue }) => {
-    try {
-      const res = await authApi.login(credentials);
-      localStorage.setItem("access-token", `jwt ${res.data.jwt}`);
-      // axios.defaults.headers.common["Authorization"] = `jwt ${res.data}`;
-    } catch (err) {
-      return rejectWithValue(JSON.parse(err));
-    }
+    localStorage.setItem("access-token", `jwt ${"tempAccessToken"}`);
+    // try {
+    //   const res = await authApi.login(credentials);
+    //   localStorage.setItem("access-token", `jwt ${res.data.jwt}`);
+    //   // // axios.defaults.headers.common["Authorization"] = `jwt ${res.data}`;
+    // } catch (err) {
+    //   return rejectWithValue(JSON.parse(err));
+    // }
   }
 );
 
@@ -130,24 +132,34 @@ const authSlice = createSlice({
       state.isLoggedIn = true;
     },
     [getUser.fulfilled]: (state, action) => {
-      const userInfo = action.payload;
-      state.isLoggedIn = true;
-      state.mySeq = userInfo.userSeq;
-      state.myEmail = userInfo.userEmail;
-      state.myNickname = userInfo.userNickname;
-      state.myImageURL = userInfo.userImg;
-      state.myUserType = userInfo.userType;
-      state.myDesc = userInfo.userDesc;
+      state = {
+        isLoggedIn: true,
+        mySeq: 1,
+        myEmail: "gmlwn@naver.com",
+        myNickname: "hejo",
+        myImageURL: "",
+        myUserType: "",
+        myDesc: "안녕안녕",
+      };
+      console.log("getUser fulfilled:", state);
+      // const userInfo = action.payload;
+      // state.isLoggedIn = true;
+      // state.mySeq = userInfo.userSeq;
+      // state.myEmail = userInfo.userEmail;
+      // state.myNickname = userInfo.userNickname;
+      // state.myImageURL = userInfo.userImg;
+      // state.myUserType = userInfo.userType;
+      // state.myDesc = userInfo.userDesc;
     },
-    [getUser.rejected]: (state, action) => {
-      state.isLoggedIn = false;
-      state.mySeq = 0;
-      state.myEmail = "";
-      state.myNickname = "";
-      state.myImageURL = "";
-      state.myUserType = "";
-      state.myDesc = "";
-    },
+    // [getUser.rejected]: (state, action) => {
+    //   state.isLoggedIn = false;
+    //   state.mySeq = 0;
+    //   state.myEmail = "";
+    //   state.myNickname = "";
+    //   state.myImageURL = "";
+    //   state.myUserType = "";
+    //   state.myDesc = "";
+    // },
     [quit.fulfilled]: (state) => {
       state.isLoggedIn = false;
       state.mySeq = 0;
