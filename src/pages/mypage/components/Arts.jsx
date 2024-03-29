@@ -4,40 +4,55 @@ import { toast } from "react-toastify";
 
 import { authApi, userArtApi } from "../../../api/api";
 
+const initialUserArts = [
+  {
+    pieceSeq: 1,
+    pieceTitle: "a",
+    pieceArtist: "aa",
+    backgroundImage: `url('https://source.unsplash.com/random')`,
+  },
+  {
+    pieceSeq: 2,
+    pieceTitle: "b",
+    pieceArtist: "bb",
+    backgroundImage: `url('https://source.unsplash.com/random')`,
+  },
+];
+
 const Arts = () => {
   const navigate = useNavigate();
   const { targetUserSeq } = useParams();
   const [selectedTab, setSelectedTab] = useState("나의 아트");
-  const [userArts, setUserArts] = useState([]);
+  // const [userArts, setUserArts] = useState([]);
+  const [userArts, setUserArts] = useState(initialUserArts);
   const [boomarkArts, setBookmarkArts] = useState([]);
 
-  const [isMine, setIsMine] = useState(false);
+  // const [isMine, setIsMine] = useState(false);
+  const [isMine, setIsMine] = useState(true);
 
-  useEffect(() => {
-    // 마이페이지 정보 가져오기
-    authApi
-      .getMyPage(targetUserSeq)
-      .then((res) => {
-        setIsMine(res.data.userIsMe === "Y" ? true : false);
-
-        // 화가이면 유저 아트 가져오기
-        if (res.data.userType === "A") {
-          userArtApi
-            .getUserArts(targetUserSeq)
-            .then((res) => setUserArts(res.data))
-            .catch(() => toast.error("나의 아트 가져오기 실패"));
-        }
-
-        // 나의 마이페이지이면 북마크 아트 가져오기
-        if (res.data.userIsMe === "Y") {
-          authApi
-            .getBookmarkArts()
-            .then((res) => setBookmarkArts(res.data))
-            .catch(() => toast.error("북마크 아트 가져오기 실패"));
-        }
-      })
-      .catch(() => {}); // 존재하지 않는 유저입니다 라고 Info.jsx에서 toast 처리해서 여기서는 하지 않음
-  }, [targetUserSeq]);
+  // // 마이페이지 정보 가져오기
+  // useEffect(() => {
+  //   authApi
+  //     .getMyPage(targetUserSeq)
+  //     .then((res) => {
+  //       setIsMine(res.data.userIsMe === "Y" ? true : false);
+  //       // 화가이면 유저 아트 가져오기
+  //       if (res.data.userType === "A") {
+  //         userArtApi
+  //           .getUserArts(targetUserSeq)
+  //           .then((res) => setUserArts(res.data))
+  //           .catch(() => toast.error("나의 아트 가져오기 실패"));
+  //       }
+  //       // 나의 마이페이지이면 북마크 아트 가져오기
+  //       if (res.data.userIsMe === "Y") {
+  //         authApi
+  //           .getBookmarkArts()
+  //           .then((res) => setBookmarkArts(res.data))
+  //           .catch(() => toast.error("북마크 아트 가져오기 실패"));
+  //       }
+  //     })
+  //     .catch(() => {}); // 존재하지 않는 유저입니다 라고 Info.jsx에서 toast 처리해서 여기서는 하지 않음
+  // }, [targetUserSeq]);
 
   return (
     <div className="flex flex-col" data-aos="fade-in">
@@ -70,7 +85,8 @@ const Arts = () => {
           userArts?.map((userArt) => (
             <div
               key={Math.random().toString()}
-              className="rounded-lg drop-shadow-md overflow-hidden relative cursor-pointer mb-2"
+              // className="rounded-lg drop-shadow-md overflow-hidden relative cursor-pointer mb-2"
+              className="rounded-lg drop-shadow-md overflow-hidden relative cursor-pointer mb-2 h-96"
               onClick={() => navigate(`/pieces/${userArt.pieceSeq}`)}
               data-aos="fade-in"
             >
@@ -78,7 +94,10 @@ const Arts = () => {
               <div
                 className="absolute inset-0 bg-cover bg-center z-0"
                 style={{
-                  backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${userArt.pieceImg}')`,
+                  // backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${userArt.pieceImg}')`,
+                  backgroundImage: userArt.backgroundImage,
+                  backgroundSize: "cover", // 이미지를 화면에 꽉 차도록 확대
+                  backgroundPosition: "center", // 이미지를 중앙에 정렬
                 }}
               ></div>
 
@@ -94,7 +113,8 @@ const Arts = () => {
               <img
                 alt="gallery"
                 className="w-full h-full object-cover object-center rounded transition"
-                src={`http://j7d201.p.ssafy.io/api/my-file/read/${userArt.pieceImg}`}
+                // src={`http://j7d201.p.ssafy.io/api/my-file/read/${userArt.pieceImg}`}
+                src={`url('https://source.unsplash.com/random/300x300')`}
               />
             </div>
           ))}
