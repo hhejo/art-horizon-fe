@@ -6,14 +6,14 @@ import { toast } from "react-toastify";
 import { authApi } from "../../../api/api";
 
 const initialUserData = {
-  userImg: "https://source.unsplash.com/random",
+  userImg: "https://source.unsplash.com/random/?car",
   userNickname: "hejo",
   userType: "A",
   userIsMe: "Y",
   userArtCount: 2,
   userFollowerCount: 3,
   userFollowingCount: 1,
-  userDesc: "하하하",
+  userDesc: "안녕하세요. 저의 작품을 감상해주셔서 감사합니다.",
 };
 
 const Info = () => {

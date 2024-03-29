@@ -7,15 +7,15 @@ import { authApi, userArtApi } from "../../../api/api";
 const initialUserArts = [
   {
     pieceSeq: 1,
-    pieceTitle: "a",
-    pieceArtist: "aa",
-    backgroundImage: `url('https://source.unsplash.com/random')`,
+    pieceTitle: "강아지의 하루",
+    pieceArtist: "hejo",
+    backgroundImage: `url('https://source.unsplash.com/random/?dog')`,
   },
   {
     pieceSeq: 2,
-    pieceTitle: "b",
-    pieceArtist: "bb",
-    backgroundImage: `url('https://source.unsplash.com/random')`,
+    pieceTitle: "시원한 풍경",
+    pieceArtist: "hejo",
+    backgroundImage: `url('https://source.unsplash.com/random/?summer')`,
   },
 ];
 
@@ -86,7 +86,7 @@ const Arts = () => {
             <div
               key={Math.random().toString()}
               // className="rounded-lg drop-shadow-md overflow-hidden relative cursor-pointer mb-2"
-              className="rounded-lg drop-shadow-md overflow-hidden relative cursor-pointer mb-2 h-96"
+              className="rounded-lg drop-shadow-md overflow-hidden relative cursor-pointer mb-2 h-40"
               onClick={() => navigate(`/pieces/${userArt.pieceSeq}`)}
               data-aos="fade-in"
             >
@@ -96,8 +96,6 @@ const Arts = () => {
                 style={{
                   // backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${userArt.pieceImg}')`,
                   backgroundImage: userArt.backgroundImage,
-                  backgroundSize: "cover", // 이미지를 화면에 꽉 차도록 확대
-                  backgroundPosition: "center", // 이미지를 중앙에 정렬
                 }}
               ></div>
 
