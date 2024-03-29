@@ -5,28 +5,39 @@ import { toast } from "react-toastify";
 
 import { authApi } from "../../../api/api";
 
+const initialUserData = {
+  userImg: "https://source.unsplash.com/random",
+  userNickname: "hejo",
+  userType: "A",
+  userIsMe: "Y",
+  userArtCount: 2,
+  userFollowerCount: 3,
+  userFollowingCount: 1,
+  userDesc: "하하하",
+};
+
 const Info = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { targetUserSeq } = useParams();
   const { isLoggedIn } = useSelector((state) => state.auth);
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState(initialUserData);
   const [isFollowed, setIsFollowed] = useState(false); // 해당 사용자 팔로우 했는지 여부
 
-  useEffect(() => {
-    authApi
-      .getMyPage(targetUserSeq)
-      .then((res) => {
-        setUserData(res.data);
-        setIsFollowed(res.data.userFollowYn === "Y" ? true : false);
-      })
-      .catch((err) => {
-        if (err.response.status === 400) {
-          navigate("/404", { replace: true });
-          toast.error("존재하지 않는 유저입니다");
-        }
-      });
-  }, [dispatch, navigate, targetUserSeq, isFollowed]);
+  // useEffect(() => {
+  //   authApi
+  //     .getMyPage(targetUserSeq)
+  //     .then((res) => {
+  //       setUserData(res.data);
+  //       setIsFollowed(res.data.userFollowYn === "Y" ? true : false);
+  //     })
+  //     .catch((err) => {
+  //       if (err.response.status === 400) {
+  //         navigate("/404", { replace: true });
+  //         toast.error("존재하지 않는 유저입니다");
+  //       }
+  //     });
+  // }, [dispatch, navigate, targetUserSeq, isFollowed]);
 
   // 팔로우 버튼 클릭
   const followHandler = () => {
@@ -51,7 +62,8 @@ const Info = () => {
         )}
         {userData?.userImg && (
           <img
-            src={`http://j7d201.p.ssafy.io/api/my-file/read/${userData?.userImg}`}
+            // src={`http://j7d201.p.ssafy.io/api/my-file/read/${userData?.userImg}`}
+            src={userData.userImg}
             alt="profile-img"
             className="w-40 h-40 rounded-3xl drop-shadow-md mr-8"
           />
