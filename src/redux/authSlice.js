@@ -46,12 +46,13 @@ export const login = createAsyncThunk(
 export const signup = createAsyncThunk(
   "authSlice/signup",
   async (credentials, { rejectWithValue }) => {
-    try {
-      const res = await authApi.signup(credentials);
-      localStorage.setItem("access-token", `jwt ${res.data.jwt}`);
-    } catch (err) {
-      return rejectWithValue(JSON.parse(err));
-    }
+    localStorage.setItem("access-token", `jwt ${"tempAccessToken"}`);
+    // try {
+    //   const res = await authApi.signup(credentials);
+    //   localStorage.setItem("access-token", `jwt ${res.data.jwt}`);
+    // } catch (err) {
+    //   return rejectWithValue(JSON.parse(err));
+    // }
   }
 );
 
