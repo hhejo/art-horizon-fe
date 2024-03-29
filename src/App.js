@@ -108,13 +108,9 @@ const App = () => {
   AOS.init();
 
   React.useEffect(() => {
-    // localStorage에 access-token (JWT) 있으면 getUser()로 로그인 사용자 정보 가져옴
     if (localStorage.getItem("access-token")) {
-      dispatch(getUser());
+      dispatch(getUser()); // localStorage에 access-token (JWT) 있으면 getUser()로 로그인 사용자 정보 가져옴
     }
-    // console.log("isLoggedIn:", isLoggedIn);
-    // console.log("access-token:", localStorage.getItem("access-token"));
-    // isLoggedIn 넣는 이유는 로그아웃하는 것을 감지하기 위해
   }, [dispatch, isLoggedIn]);
 
   return (
@@ -137,96 +133,3 @@ const App = () => {
 };
 
 export default App;
-
-// import React, { useEffect, useState } from "react";
-// import { Routes, Route, useLocation, useParams } from "react-router-dom";
-// import { RecommendPlaceMain, PlaceDetailMain } from "./pages/index";
-// import Navbar from "../src/components/common/Navbar";
-// import Footer from "./components/common/Footer";
-// import OnBoard from "./pages/OnBoard";
-// import MyPage from "./pages/MyPage";
-// import Survey from "./pages/Survey";
-// import Redirect from "./components/oauth/Redirect";
-// import SNS from "./pages/SNS";
-// import { Provider, useSelector } from "react-redux";
-// import store, { RootState } from "./store";
-// import { CSSTransition, TransitionGroup } from "react-transition-group";
-// import "./App.css";
-// import ProtectedRoute from "./components/common/ProtectedRoute";
-// import { AuthState } from "../src/store/auth";
-// import { springAxios } from "./apis";
-// function App() {
-//   const isAuthenticated = useSelector(
-//     (state: RootState) => state.auth.isAuthenticated
-//   );
-
-//   if (isAuthenticated) {
-//     springAxios.defaults.headers.common["Authorization"] =
-//       localStorage.getItem("accessToken")!;
-//   }
-//   const location = useLocation();
-//   const userId = useSelector((state: RootState) => state.auth.userId);
-
-//   const isSurveyed = window.location.href.includes("survey");
-
-//   // const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-//   // survey 시 navbar 제거 위함
-
-//   // useEffect(() => {}, [isAuthenticated]);
-
-//   // const isSurveyed = useSelector((state: RootState) => state.auth.isSurveyed);
-
-//   return (
-//     <>
-//       {isAuthenticated && !isSurveyed && (
-//         <Navbar isAuthenticated={isAuthenticated} userId={userId} />
-//       )}
-//       {/* 로그인 기능 구현 될 경우 Navbar 수정 /}
-//       {/ <Navbar isAuthenticated={isAuthenticated} /> /}
-//       <TransitionGroup className="transition-group">
-//         <CSSTransition
-//           key={location.pathname}
-//           classNames="pageSlider"
-//           timeout={500}
-//         >
-//           <Routes location={location}>
-//             <Route path="/" element={<OnBoard />} />
-//             <Route
-//               path="/survey"
-//               element={
-//                 <ProtectedRoute isAuthenticated={isAuthenticated}>
-//                   <Survey />
-//                 </ProtectedRoute>
-//               }
-//             />
-//             <Route
-//               path="/mypage/:id"
-//               element={
-//                 <ProtectedRoute isAuthenticated={isAuthenticated}>
-//                   <MyPage />
-//                 </ProtectedRoute>
-//               }
-//             />
-//             <Route
-//               path="/recommendMain"
-//               element={
-//                 <RecommendPlaceMain
-//                   latitude={36.271610662143146}
-//                   longitude={129.29439396586432}
-//                 />
-//               }
-//             />
-//             {/ <Route path="/kakao" element={<Redirect />} /> /}
-//             <Route path="/place/:place_id" element={<PlaceDetailMain />} />
-//             <Route path="/sns" element={<SNS />} />
-//           </Routes>
-//         </CSSTransition>
-//       </TransitionGroup>
-//       {/ <Footer /> */}
-//       {isAuthenticated && <Footer />}
-//     </>
-//   );
-// }
-
-// export default App;
