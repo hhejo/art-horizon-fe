@@ -1,16 +1,35 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { auth } from "../firebase";
 
 import { authApi } from "../api/api";
 
+// 초기 상태값
 const initialState = {
-  isLoggedIn: false,
-  mySeq: "",
-  myEmail: "",
-  myNickname: "",
-  myImageURL: "",
-  myUserType: "",
-  myDesc: "",
+  value: {
+    loggedIn: false,
+    uid: "", // firebase auth uid
+    docId: "", // users 컬렉션 docId
+    email: "",
+    nickname: "",
+    imageURL: "", // 프로필 이미지 URL
+    userType: "", // "A" (화가) or "N" (일반)
+    desc: "", // 상태 메시지
+  },
 };
+
+// 로그인 된 현재 사용자 정보를 Redux에 설정
+export const setCurrentUser = createAsyncThunk(
+  "user/setCurrentUser",
+  async (user, { rejectWithValue }) => {
+    try {
+      const { uid, docId, email } = user;
+      const { displayName: nickname, photoURL: imageURL } = user;
+      return { uid, docId, email, nickname, imageURL, desc: "", userType: "N" };
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
 
 export const getUser = createAsyncThunk(
   "authSlice/getUser",
@@ -116,42 +135,54 @@ const authSlice = createSlice({
       state.value = action.payload;
     },
     logout: (state) => {
-      state.isLoggedIn = false;
-      state.mySeq = 0;
-      state.myEmail = "";
-      state.myNickname = "";
-      state.myImageURL = "";
-      state.myUserType = "";
-      state.myDesc = "";
-      localStorage.removeItem("access-token");
-      // toast.success("성공적으로 로그아웃했습니다");
-      // window.location.reload();
+      auth.signOut();
+      state.value = initialState.value;
     },
+    // logout: (state) => {
+    //   state.isLoggedIn = false;
+    //   state.mySeq = 0;
+    //   state.myEmail = "";
+    //   state.myNickname = "";
+    //   state.myImageURL = "";
+    //   state.myUserType = "";
+    //   state.myDesc = "";
+    //   localStorage.removeItem("access-token");
+    //   // toast.success("성공적으로 로그아웃했습니다");
+    //   // window.location.reload();
+    // },
   },
   extraReducers: {
     [login.fulfilled]: (state) => {
       state.isLoggedIn = true;
     },
-    [getUser.fulfilled]: (state, action) => {
-      state = {
-        isLoggedIn: true,
-        mySeq: 1,
-        myEmail: "gmlwn@naver.com",
-        myNickname: "hejo",
-        myImageURL: "",
-        myUserType: "",
-        myDesc: "안녕안녕",
-      };
-      console.log("getUser fulfilled:", state);
-      // const userInfo = action.payload;
-      // state.isLoggedIn = true;
-      // state.mySeq = userInfo.userSeq;
-      // state.myEmail = userInfo.userEmail;
-      // state.myNickname = userInfo.userNickname;
-      // state.myImageURL = userInfo.userImg;
-      // state.myUserType = userInfo.userType;
-      // state.myDesc = userInfo.userDesc;
+    // setCurrentUser.fulfilled
+    [setCurrentUser.fulfilled]: (state, action) => {
+      const { uid, docId, email, nickname, imageURL } = action.payload;
+      state.value = { loggedIn: true, uid, docId, email, nickname, imageURL };
     },
+    // setCurrentUser.rejected
+    [setCurrentUser.rejected]: (state, action) => {
+      state.value = initialState.value;
+    },
+    // [getUser.fulfilled]: (state, action) => {
+    //   state = {
+    //     isLoggedIn: true,
+    //     mySeq: 1,
+    //     myEmail: "gmlwn@naver.com",
+    //     myNickname: "hejo",
+    //     myImageURL: "",
+    //     myUserType: "",
+    //     myDesc: "안녕안녕",
+    //   };
+    //   const userInfo = action.payload;
+    //   state.isLoggedIn = true;
+    //   state.mySeq = userInfo.userSeq;
+    //   state.myEmail = userInfo.userEmail;
+    //   state.myNickname = userInfo.userNickname;
+    //   state.myImageURL = userInfo.userImg;
+    //   state.myUserType = userInfo.userType;
+    //   state.myDesc = userInfo.userDesc;
+    // },
     // [getUser.rejected]: (state, action) => {
     //   state.isLoggedIn = false;
     //   state.mySeq = 0;
@@ -161,15 +192,15 @@ const authSlice = createSlice({
     //   state.myUserType = "";
     //   state.myDesc = "";
     // },
-    [quit.fulfilled]: (state) => {
-      state.isLoggedIn = false;
-      state.mySeq = 0;
-      state.myEmail = "";
-      state.myNickname = "";
-      state.myImageURL = "";
-      state.myUserType = "";
-      state.myDesc = "";
-    },
+    // [quit.fulfilled]: (state) => {
+    //   state.isLoggedIn = false;
+    //   state.mySeq = 0;
+    //   state.myEmail = "";
+    //   state.myNickname = "";
+    //   state.myImageURL = "";
+    //   state.myUserType = "";
+    //   state.myDesc = "";
+    // },
   },
 });
 

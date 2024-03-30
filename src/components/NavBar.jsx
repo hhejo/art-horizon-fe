@@ -9,15 +9,16 @@ import { logout } from "../redux/authSlice";
 import arthorizonLogo from "../assets/images/arthorizionlogo.png";
 
 const NavBar = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const {
-    isLoggedIn,
-    // mySeq: userSeq,
-    // myNickname,
-  } = useSelector((state) => state.auth);
-  const myNickname = "hejo";
-  const userSeq = 1;
+  const [dispatch, navigate] = [useDispatch(), useNavigate()];
+  // const {
+  //   isLoggedIn,
+  //   // mySeq: userSeq,
+  //   // myNickname,
+  // } = useSelector((state) => state.auth);
+
+  const { loggedIn, docId, nickname } = useSelector(
+    (state) => state.auth.value
+  );
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -60,8 +61,8 @@ const NavBar = () => {
           </Link>
         </div>
 
-        {/* 로그인 x */}
-        {!isLoggedIn && (
+        {/* 로그인 X */}
+        {!loggedIn && (
           <div>
             <button
               onClick={() => navigate("/login")}
@@ -78,14 +79,14 @@ const NavBar = () => {
           </div>
         )}
 
-        {/* 로그인 o */}
-        {isLoggedIn && (
+        {/* 로그인 O */}
+        {loggedIn && (
           <div>
             <button
-              onClick={() => navigate(`/mypage/${userSeq}`)}
+              onClick={() => navigate(`/mypage/${docId}`)}
               className="inline-flex items-center text-amber-500 py-1 px-3 bg-white border-amber-300 focus:outline-none hover:text-white hover:bg-amber-500 hover:drop-shadow-md border border-white hover:border hover:border-amber-200 rounded-lg text-base mt-4 md:mt-0 mr-1 transition"
             >
-              {myNickname}
+              {nickname}
             </button>
             <button
               onClick={logoutHandler}

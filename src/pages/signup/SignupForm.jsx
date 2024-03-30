@@ -1,15 +1,18 @@
+// React, Router, Redux
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+// Slice
+// import { signup } from "../../redux/authSlice";
+// Toast
 import { toast } from "react-toastify";
+// Icon
 import { FaCheck } from "react-icons/fa";
 
-import { authApi } from "../../api/api";
-import { signup } from "../../redux/authSlice";
+// import { authApi } from "../../api/api";
 
-const SignupForm = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+const SignupForm = (props) => {
+  const { signup } = props;
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
   const [password1, setPassword1] = useState("");
@@ -38,24 +41,29 @@ const SignupForm = () => {
       return;
     }
 
-    const signupData = JSON.stringify({
-      userEmail: email,
-      userPassword: password1,
-      userNickname: nickname,
-      userType: "N",
-    });
+    // const signupData = JSON.stringify({
+    //   userEmail: email,
+    //   userPassword: password1,
+    //   userNickname: nickname,
+    //   userType: "N",
+    // });
+
+    const signupData = { email, nickname, password: password1 };
 
     setEmail("");
     setNickname("");
     setPassword1("");
     setPassword2("");
-    dispatch(signup(signupData))
-      .unwrap()
-      .then(() => {
-        navigate("/login", { replace: true });
-        toast.success("회원 가입에 성공했습니다. 로그인하세요");
-      })
-      .catch(() => toast.error("회원 가입에 실패했습니다"));
+
+    signup(signupData);
+
+    // dispatch(signup(signupData))
+    //   .unwrap()
+    //   .then(() => {
+    //     navigate("/login", { replace: true });
+    //     toast.success("회원 가입에 성공했습니다. 로그인하세요");
+    //   })
+    //   .catch(() => toast.error("회원 가입에 실패했습니다"));
   };
 
   // 이메일 중복 확인 (API가 없어서 무조건 성공)
@@ -73,16 +81,16 @@ const SignupForm = () => {
       toast.warn("닉네임을 입력하세요");
       return;
     }
-    authApi
-      .checkNickname(nickname)
-      .then((res) => {
-        if (res.data === "SUCCESS") {
-          toast.success("사용할 수 있는 닉네임입니다");
-        } else if (res.data === "FAILURE") {
-          toast.error("사용할 수 없는 닉네임입니다");
-        }
-      })
-      .catch(() => toast.error("오류가 발생했습니다"));
+    // authApi
+    //   .checkNickname(nickname)
+    //   .then((res) => {
+    //     if (res.data === "SUCCESS") {
+    //       toast.success("사용할 수 있는 닉네임입니다");
+    //     } else if (res.data === "FAILURE") {
+    //       toast.error("사용할 수 없는 닉네임입니다");
+    //     }
+    //   })
+    //   .catch(() => toast.error("오류가 발생했습니다"));
   };
 
   return (

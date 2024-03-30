@@ -5,7 +5,8 @@ import { toast } from "react-toastify";
 
 import { login, getUser } from "../../redux/authSlice";
 
-const LoginForm = () => {
+const LoginForm = (props) => {
+  const { login } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -24,22 +25,25 @@ const LoginForm = () => {
       return;
     }
 
-    // 로그인 데이터 (이메일, 비밀번호)
-    const loginData = JSON.stringify({
-      userEmail: email,
-      userPassword: password,
-    });
+    // const loginData = JSON.stringify({
+    //   userEmail: email,
+    //   userPassword: password,
+    // });
+
+    const loginData = { email, password };
 
     setEmail("");
     setPassword("");
-    dispatch(login(loginData))
-      .unwrap()
-      .then(() => {
-        dispatch(getUser());
-        navigate("/", { replace: true });
-        toast.success("성공적으로 로그인했습니다");
-      })
-      .catch(() => toast.error("로그인에 실패했습니다"));
+
+    login(loginData);
+    // dispatch(login(loginData))
+    //   .unwrap()
+    //   .then(() => {
+    //     dispatch(getUser());
+    //     navigate("/", { replace: true });
+    //     toast.success("성공적으로 로그인했습니다");
+    //   })
+    //   .catch(() => toast.error("로그인에 실패했습니다"));
   };
 
   return (
