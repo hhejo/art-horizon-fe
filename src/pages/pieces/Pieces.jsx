@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaArrowDown, FaSpinner, FaSearch, FaHashtag } from "react-icons/fa";
 
@@ -6,60 +6,90 @@ import { piecesApi, searchApi } from "../../api/api";
 
 import NavBar from "../../components/NavBar";
 
-// const CARD_SIZE = 10;
-// const PAGE_SIZE = 10 * Math.ceil(visualViewport.width / CARD_SIZE);
+// 높이 (총 32가지)
+const heights = [
+  "h-1",
+  "h-1.5",
+  "h-2",
+  "h-2.5",
+  "h-3",
+  "h-3.5",
+  "h-4",
+  "h-5",
+  "h-6",
+  "h-7",
+  "h-8",
+  "h-9",
+  "h-10",
+  "h-11",
+  "h-12",
+  "h-14",
+  "h-16",
+  "h-20",
+  "h-24",
+  "h-28",
+  "h-32",
+  "h-36",
+  "h-40",
+  "h-44",
+  "h-48",
+  "h-52",
+  "h-56",
+  "h-60",
+  "h-64",
+  "h-72",
+  "h-80",
+  "h-96",
+];
 
-// const DUMMY = new Array(20).fill(0).map(() => {
-//   return {
-//     title: Math.random().toString(),
-//     content: Math.random().toString(),
-//   };
-// });
+// 랜덤 정수 생성
+const getRandomInteger = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
 
-// // 무한스크롤
-// useEffect(() => {
-//   const handleScroll = () => {
-//     const { scrollTop, offsetHeight } = document.documentElement;
-//     if (window.innerHeight + scrollTop >= offsetHeight) {
-//       setIsFetching(true);
-//     }
-//   };
-//   setIsFetching(true);
-//   window.addEventListener("scroll", handleScroll);
-//   return () => window.removeEventListener("scroll", handleScroll);
-// }, []);
-// useEffect(() => {
-//   if (isFetching && hasNextPage) {
-//     fetchRecentPieces();
-//     // fetchRandomPieces();
-//   } else if (!hasNextPage) {
-//     setIsFetching(false);
-//   }
-// }, [isFetching, fetchRecentPieces, hasNextPage]);
+// piece 리턴 함수
+const getPiece = (seq, title, artist, q) => {
+  return {
+    pieceSeq: seq,
+    pieceTitle: title,
+    pieceArtist: artist,
+    // height: heights[getRandomInteger(0, 31)],
+    height: "h-40",
+    backgroundImage: `url('https://source.unsplash.com/random/?${q}')`,
+  };
+};
 
-const LOADING_TIME = 1500;
+// 더미
+const piecesList = [
+  getPiece(1, "제목 1", "화가 1", "apple"),
+  getPiece(2, "제목 2", "화가 2", "orange"),
+  getPiece(3, "제목 3", "화가 3", "banana"),
+  getPiece(4, "제목 4", "화가 4", "summer"),
+  getPiece(5, "제목 5", "화가 5", "spring"),
+];
+
+const ddd = {
+  totalPage: 125, // 총 페이지 수
+  page: 20, // 요청한 페이지
+  pieceList: [
+    {
+      pieceSeq: 153,
+      pieceTitle: "바다 풍경, 달빛 아래 항해",
+      pieceArtist: "클로드 모네",
+      pieceImg: "153_Claude Monet_A Seascape, Shipping by Moonlight.jpg",
+      piecePrice: 10000,
+    },
+  ],
+  result: "SUCCESS",
+};
+
+// const LOADING_TIME = 1500;
+const LOADING_TIME = 7000;
 
 const initialKeywordsState = [
-  {
-    id: 1,
-    keywordName: "작품명",
-    isSelected: false,
-  },
-  {
-    id: 2,
-    keywordName: "명화작가명",
-    isSelected: false,
-  },
-  {
-    id: 3,
-    keywordName: "유저명",
-    isSelected: false,
-  },
-  {
-    id: 4,
-    keywordName: "태그",
-    isSelected: false,
-  },
+  { id: 1, keywordName: "작품명", isSelected: false },
+  { id: 2, keywordName: "명화작가명", isSelected: false },
+  { id: 3, keywordName: "유저명", isSelected: false },
+  { id: 4, keywordName: "태그", isSelected: false },
 ];
 
 const Pieces = () => {
@@ -67,11 +97,12 @@ const Pieces = () => {
   const location = useLocation();
   const [recentPieces, setRecentPieces] = useState([]);
   // const [popularPiecesList, setPopularPiecesList] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
 
-  const [page, setPage] = useState(1);
-  const [isFetching, setIsFetching] = useState(false);
-  const [hasNextPage, setNextPage] = useState(true);
+  const [page, setPage] = useState(1); // 현재 받아온 페이지??
+  const [isFetching, setIsFetching] = useState(false); // 스크롤이 맨 끝에 닿으면 true??
+  const [hasNextPage, setNextPage] = useState(true); // 다음 페이지가 있는지 없는지??
 
   const [keywords, setKeywords] = useState(initialKeywordsState);
   const [searchInput, setSearchInput] = useState("");
@@ -81,20 +112,20 @@ const Pieces = () => {
 
   const [searchResults, setSearchResults] = useState([]);
 
-  const fetchRecentPieces = useCallback(async () => {
-    // setIsLoading(true);
-    // const { data } = await piecesApi.getPiecesRandom(page);
-    const { data } = await piecesApi.getPiecesRecent(page);
-    setRecentPieces((prevState) => [...prevState, ...data.pieceList]);
-    if (page + 1 > data.totalPage) {
-      setNextPage(false);
-      setIsLoading(false);
-    }
-    setPage((prevState) => prevState + 1);
-    // setNextPage();
-    setIsFetching(false);
-    setIsLoading(false);
-  }, [page]);
+  // const fetchRecentPieces = useCallback(async () => {
+  //   // setIsLoading(true);
+  //   // const { data } = await piecesApi.getPiecesRecent(page);
+  //   // setRecentPieces((prevState) => [...prevState, ...data.pieceList]);
+  //   setRecentPieces((prev) => [...prev, ...piecesList]);
+  //   // if (page + 1 > data.totalPage) {
+  //   //   setNextPage(false);
+  //   //   setIsLoading(false);
+  //   // }
+  //   setPage((prevState) => prevState + 1);
+  //   // setNextPage();
+  //   setIsFetching(false);
+  //   setIsLoading(false);
+  // }, [page]);
 
   // 무한스크롤
   useEffect(() => {
@@ -110,6 +141,22 @@ const Pieces = () => {
   }, []);
 
   useEffect(() => {
+    const fetchRecentPieces = async () => {
+      // setIsLoading(true);
+      // const { data } = await piecesApi.getPiecesRecent(page);
+      // setRecentPieces((prevState) => [...prevState, ...data.pieceList]);
+      setRecentPieces((prev) => [...prev, ...piecesList]);
+      // if (page + 1 > data.totalPage) {
+      //   setNextPage(false);
+      //   setIsLoading(false);
+      // }
+      setPage((prevState) => prevState + 1);
+      // setNextPage();
+      setIsFetching(false);
+      setIsLoading(false);
+    };
+
+    setTimeout(fetchRecentPieces, LOADING_TIME);
     if (isFetching && hasNextPage) {
       setIsLoading(true);
       setTimeout(fetchRecentPieces, LOADING_TIME);
@@ -117,7 +164,7 @@ const Pieces = () => {
     } else if (!hasNextPage) {
       setIsFetching(false);
     }
-  }, [isFetching, fetchRecentPieces, hasNextPage]);
+  }, [isFetching, hasNextPage]);
 
   useEffect(() => {
     if (location.state?.tagKeyword) {
@@ -235,7 +282,7 @@ const Pieces = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <NavBar />
       <section className="" style={{ marginTop: "71px" }}>
         <div className="py-64 mx-auto">
@@ -381,22 +428,24 @@ const Pieces = () => {
                 </div>
 
                 {/* 그림 리스트 */}
+                {/* 중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요중요 */}
                 {/* <div className="lg:columns-4 md:columns-3 sm:columns-2 gap-2"> */}
                 <div className="grid gap-2 grid-cols-4">
                   {recentPieces?.map((piece) => (
                     <div
-                      key={piece.pieceSeq}
-                      className={`shadow-md rounded mb-2 drop-shadow-md overflow-hidden relative cursor-pointer`}
+                      // key={piece.pieceSeq}
+                      key={`${Math.random()}`}
+                      className={`shadow-md rounded mb-2 drop-shadow-md overflow-hidden relative cursor-pointer ${piece.height}`}
                       onClick={() => navigate(`${piece.pieceSeq}`)}
                     >
                       {/* 그림 */}
                       <div
                         className="absolute inset-0 bg-cover bg-center z-0"
                         style={{
-                          backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}')`,
+                          // backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}')`,
+                          backgroundImage: piece.backgroundImage,
                         }}
                       ></div>
-
                       {/* 설명 */}
                       <div className="opacity-0 hover:opacity-90 hover:bg-gray-900 ease-in-out duration-300 absolute inset-0 z-10 flex flex-col justify-center items-center p-4">
                         <div className="text-2xl text-white font-semibold mb-6 text-center">
@@ -409,12 +458,14 @@ const Pieces = () => {
                       <img
                         alt="gallery"
                         className="w-full h-full object-cover object-center rounded transition ease-in-out duration-300"
-                        src={`http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}`}
+                        // src={`http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}`}
+                        src={`url('https://source.unsplash.com/random')`}
                       />
                     </div>
                   ))}
+
                   {isLoading && (
-                    <React.Fragment>
+                    <>
                       <div className="w-full h-64 bg-gray-200 rounded animate-pulse"></div>
                       <div className="w-full h-64 bg-gray-200 rounded animate-pulse"></div>
                       <div className="w-full h-64 bg-gray-200 rounded animate-pulse"></div>
@@ -423,7 +474,7 @@ const Pieces = () => {
                       <div className="w-full h-64 bg-gray-200 rounded animate-pulse"></div>
                       <div className="w-full h-64 bg-gray-200 rounded animate-pulse"></div>
                       <div className="w-full h-64 bg-gray-200 rounded animate-pulse"></div>
-                    </React.Fragment>
+                    </>
                   )}
                 </div>
 
@@ -439,11 +490,6 @@ const Pieces = () => {
                         height: "5rem",
                       }}
                     />
-                    {/* <div className="flex items-center justify-center space-x-2">
-                    <div className="w-4 h-4 rounded-full animate-pulse bg-sky-300"></div>
-                    <div className="w-4 h-4 rounded-full animate-pulse bg-sky-400"></div>
-                    <div className="w-4 h-4 rounded-full animate-pulse bg-sky-500"></div>
-                  </div> */}
                   </div>
                 )}
 
@@ -621,7 +667,7 @@ const Pieces = () => {
           )}
         </div>
       </section>
-    </React.Fragment>
+    </>
   );
 };
 
