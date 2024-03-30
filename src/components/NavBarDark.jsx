@@ -10,15 +10,14 @@ import arthorizonLogo from "../assets/images/arthorizionlogo.png";
 const NavBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {
-    isLoggedIn,
-    mySeq: userSeq,
-    myNickname,
-  } = useSelector((state) => state.auth);
+  // const { isLoggedIn, mySeq: userSeq, myNickname, } = useSelector((state) => state.auth);
+  const { loggedIn, docId, nickname } = useSelector(
+    (state) => state.auth.value
+  );
 
-  useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch, isLoggedIn]);
+  // useEffect(() => {
+  //   dispatch(getUser());
+  // }, [dispatch, isLoggedIn]);
 
   return (
     <div className="bg-gray-900 fixed inset-x-0 top-0 z-50">
@@ -54,8 +53,8 @@ const NavBar = () => {
           </Link>
         </div>
 
-        {/* 로그인 x */}
-        {!isLoggedIn && (
+        {/* 로그인 X */}
+        {!loggedIn && (
           <div>
             <button
               onClick={() => navigate("/login")}
@@ -72,14 +71,14 @@ const NavBar = () => {
           </div>
         )}
 
-        {/* 로그인 o */}
-        {isLoggedIn && (
+        {/* 로그인 O */}
+        {loggedIn && (
           <div>
             <button
-              onClick={() => navigate(`/mypage/${userSeq}`)}
+              onClick={() => navigate(`/mypage/${docId}`)}
               className="inline-flex items-center text-gray-500 py-1 px-3 border-gray-500 focus:outline-none hover:text-gray-700 hover:bg-gray-300 hover:drop-shadow-md border border-white hover:border hover:border-gray-300 rounded-lg text-base mt-4 md:mt-0 mr-1 transition"
             >
-              {myNickname}
+              {nickname}
             </button>
             <button
               onClick={() => dispatch(logout())}
