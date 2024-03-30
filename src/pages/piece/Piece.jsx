@@ -9,18 +9,43 @@ import { MdOutlinePayment } from "react-icons/md";
 
 import NavBarDark from "../../components/NavBarDark";
 
+const dummyPiece = {
+  pieceSeq: 100,
+  pieceType: "M",
+  pieceTitleKr: "구성 10",
+  pieceTitleEn: "Composition 10",
+  pieceArtistKr: "바실리 칸딘스키",
+  pieceArtistEn: "Vasiliy Kandinskiy",
+  pieceArtistSeq: 1,
+  pieceDesc: null,
+  // pieceImg: `url('https://source.unsplash.com/random')`,
+  pieceImg: "https://source.unsplash.com/random/",
+  pieceHitCount: 0,
+  pieceBookmarkCount: 0,
+  pieceTag: null,
+  pieceYear: 1939,
+  pieceCentury: 20,
+  pieceStyle: "추상주의",
+  pieceGenre: "추상화",
+  pieceScent: "스모키",
+  piecePrice: 10000,
+  pieceBookmarkYn: "Y",
+  pieceCollectYn: "N",
+  result: "SUCCESS",
+};
+
 const Piece = () => {
   const { pieceSeq } = useParams();
   const navigate = useNavigate();
-  const [piece, setPiece] = useState();
+  const [piece, setPiece] = useState(dummyPiece);
   const [cinema, setCinema] = useState(false);
 
-  useEffect(() => {
-    piecesApi
-      .getPieceDetail(pieceSeq)
-      .then((res) => setPiece(res.data))
-      .catch(() => toast.error("작품 불러오기 오류"));
-  }, [pieceSeq]);
+  // useEffect(() => {
+  //   piecesApi
+  //     .getPieceDetail(pieceSeq)
+  //     .then((res) => setPiece(res.data))
+  //     .catch(() => toast.error("작품 불러오기 오류"));
+  // }, [pieceSeq]);
 
   // 북마크 설정하기
   const setBookmark = () => {
@@ -72,7 +97,8 @@ const Piece = () => {
           <div
             className="mx-auto flex justify-center items-center bg-cover bg-center opacity-30 blur"
             style={{
-              backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}')`,
+              // backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}')`,
+              backgroundImage: `url('https://source.unsplash.com/random')`,
               // height: "1009px",
               height: "93vh",
               // height: "92.95vh",
@@ -85,9 +111,10 @@ const Piece = () => {
         {/* 명화 그림, 정보 */}
         {!cinema && piece && piece.pieceType === "M" && (
           <div
-            className="mx-auto flex justify-center items-center absolute top-0 left-0"
+            className="mx-auto flex justify-center items-center bg-cover bg-center absolute top-0 left-0"
             style={{
               // backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}')`,
+              backgroundImage: `url('https://source.unsplash.com/random')`,
               // height: "1009px",
               height: "93vh",
               // height: "92.95vh",
@@ -99,7 +126,8 @@ const Piece = () => {
               <img
                 alt="gallery"
                 className="object-contain rounded drop-shadow-md mr-8 cursor-pointer hover:opacity-80 transition"
-                src={`http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}`}
+                // src={`http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}`}
+                src={`https://source.unsplash.com/random`}
                 style={{ maxWidth: "73vw", maxHeight: "90vh" }}
                 onClick={() => setCinema(true)}
                 data-aos="zoom-out"
@@ -188,6 +216,7 @@ const Piece = () => {
             className="mx-auto flex justify-center items-center absolute top-0 left-0"
             style={{
               // backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}')`,
+              backgroundImage: `url('https://source.unsplash.com/random')`,
               // height: "1009px",
               height: "93vh",
               // height: "92.95vh",
@@ -199,7 +228,9 @@ const Piece = () => {
               <img
                 alt="gallery"
                 className="object-contain rounded drop-shadow-md mr-8 cursor-pointer hover:opacity-80 transition"
-                src={`http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}`}
+                // src={`http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}`}
+                // src={piece.pieceImg}
+                src="https://source.unsplash.com/random"
                 style={{ maxWidth: "73vw", maxHeight: "90vh" }}
                 onClick={() => setCinema(true)}
                 data-aos="zoom-out"
@@ -299,7 +330,8 @@ const Piece = () => {
           <div
             className="mx-auto flex justify-center items-center bg-cover bg-center opacity-30 blur"
             style={{
-              backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}')`,
+              // backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}')`,
+              backgroundImage: `url('https://source.unsplash.com/random')`,
               // height: "1009px",
               height: "100vh",
               // height: "92.95vh",
@@ -315,6 +347,7 @@ const Piece = () => {
             className="mx-auto flex justify-center items-center absolute top-0 left-0 cursor-pointer"
             style={{
               // backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}')`,
+              backgroundImage: `url('https://source.unsplash.com/random')`,
               // height: "1009px",
               height: "100vh",
               // height: "92.95vh",
@@ -327,7 +360,8 @@ const Piece = () => {
               <img
                 alt="gallery"
                 className="object-contain rounded drop-shadow-md mr-8 cursor-pointer transition"
-                src={`http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}`}
+                // src={`http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}`}
+                src={`url('https://source.unsplash.com/random')`}
                 style={{ width: "100vw", height: "100vh" }}
                 onClick={() => setCinema(false)}
                 // data-aos="zoom-out"
