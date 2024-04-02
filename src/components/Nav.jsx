@@ -1,29 +1,22 @@
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { logout } from "../redux/authSlice";
+import { logout } from "../redux/user-slice";
 
 // import logoImage from "../assets/images/Art_Horizon_Logo.png";
 import arthorizonLogo from "../assets/images/arthorizionlogo.png";
 
-const NavBar = () => {
+export const Nav = () => {
   const [dispatch, navigate] = [useDispatch(), useNavigate()];
-  // const {
-  //   isLoggedIn,
-  //   // mySeq: userSeq,
-  //   // myNickname,
-  // } = useSelector((state) => state.auth);
-
-  const { loggedIn, docId, nickname } = useSelector(
-    (state) => state.auth.value
+  const { isLoggedIn, docId, nickname } = useSelector(
+    (state) => state.user.value
   );
 
   const logoutHandler = () => {
     dispatch(logout());
-    navigate("/", { replace: true });
     toast.success("성공적으로 로그아웃했습니다");
+    navigate("/", { replace: true });
     // window.location.reload();
   };
 
@@ -62,7 +55,7 @@ const NavBar = () => {
         </div>
 
         {/* 로그인 X */}
-        {!loggedIn && (
+        {!isLoggedIn && (
           <div>
             <button
               onClick={() => navigate("/login")}
@@ -80,7 +73,7 @@ const NavBar = () => {
         )}
 
         {/* 로그인 O */}
-        {loggedIn && (
+        {isLoggedIn && (
           <div>
             <button
               onClick={() => navigate(`/mypage/${docId}`)}
@@ -101,5 +94,3 @@ const NavBar = () => {
     </div>
   );
 };
-
-export default NavBar;

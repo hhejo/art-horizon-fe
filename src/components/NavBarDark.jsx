@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getUser, logout } from "../redux/authSlice";
+import { getUser, logout } from "../redux/user-slice";
 
 // import logoImage from "../assets/images/Art_Horizon_Logo.png";
 import arthorizonLogo from "../assets/images/arthorizionlogo.png";

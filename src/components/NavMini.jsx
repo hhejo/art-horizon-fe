@@ -1,10 +1,9 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 // import logoImage from "../assets/images/Art_Horizon_Logo.png";
 import arthorizonLogo from "../assets/images/arthorizionlogo.png";
 
-const NavBar2 = () => {
+export const NavMini = () => {
   return (
     <div className="fixed inset-x-0 top-0 z-50">
       <nav
@@ -26,5 +25,3 @@ const NavBar2 = () => {
     </div>
   );
 };
-
-export default NavBar2;
