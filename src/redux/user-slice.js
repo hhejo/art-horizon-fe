@@ -1,12 +1,14 @@
+// Redux
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// Firebase
 import { auth } from "../firebase";
 
-import { authApi } from "../api/api";
+// import { authApi } from "../api/api";
 
 // 초기 상태값
 const initialState = {
   value: {
-    loggedIn: false,
+    isLoggedIn: false,
     uid: "", // firebase auth uid
     docId: "", // users 컬렉션 docId
     email: "",
@@ -75,60 +77,60 @@ export const signup = createAsyncThunk(
   }
 );
 
-export const quit = createAsyncThunk(
-  "authSlice/quit",
-  async (_, { rejectWithValue }) => {
-    try {
-      // axios.defaults.headers.common[
-      //   "Authorization"
-      // ] = `jwt ${localStorage.getItem("access-token")}`;
-      const res = await authApi.quit();
-      localStorage.removeItem("access-token");
-      return res.data;
-    } catch (err) {
-      return rejectWithValue(JSON.parse(err.response));
-    }
-  }
-);
+// export const quit = createAsyncThunk(
+//   "authSlice/quit",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       // axios.defaults.headers.common[
+//       //   "Authorization"
+//       // ] = `jwt ${localStorage.getItem("access-token")}`;
+//       const res = await authApi.quit();
+//       localStorage.removeItem("access-token");
+//       return res.data;
+//     } catch (err) {
+//       return rejectWithValue(JSON.parse(err.response));
+//     }
+//   }
+// );
 
-export const changeProfile = createAsyncThunk(
-  "authSlice/changeProfile",
-  async (profileData, { rejectWithValue }) => {
-    try {
-      const res = await authApi.changeProfile(profileData);
-      return res.data;
-    } catch (err) {
-      return rejectWithValue(JSON.parse(err.response));
-    }
-  }
-);
+// export const changeProfile = createAsyncThunk(
+//   "authSlice/changeProfile",
+//   async (profileData, { rejectWithValue }) => {
+//     try {
+//       const res = await authApi.changeProfile(profileData);
+//       return res.data;
+//     } catch (err) {
+//       return rejectWithValue(JSON.parse(err.response));
+//     }
+//   }
+// );
 
-export const changePassword = createAsyncThunk(
-  "authSlice/changePassword",
-  async (passwordData, { rejectWithValue }) => {
-    try {
-      const res = await authApi.changePassword(passwordData);
-      return res.data;
-    } catch (err) {
-      return rejectWithValue(JSON.parse(err.response));
-    }
-  }
-);
+// export const changePassword = createAsyncThunk(
+//   "authSlice/changePassword",
+//   async (passwordData, { rejectWithValue }) => {
+//     try {
+//       const res = await authApi.changePassword(passwordData);
+//       return res.data;
+//     } catch (err) {
+//       return rejectWithValue(JSON.parse(err.response));
+//     }
+//   }
+// );
 
-export const changeType = createAsyncThunk(
-  "authSlice/changeType",
-  async (_, { rejectWithValue }) => {
-    try {
-      const res = await authApi.changeType();
-      return res.data;
-    } catch (err) {
-      return rejectWithValue(JSON.parse(err.response));
-    }
-  }
-);
+// export const changeType = createAsyncThunk(
+//   "authSlice/changeType",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const res = await authApi.changeType();
+//       return res.data;
+//     } catch (err) {
+//       return rejectWithValue(JSON.parse(err.response));
+//     }
+//   }
+// );
 
 const authSlice = createSlice({
-  name: "auth",
+  name: "user",
   initialState,
   reducers: {
     getUserInfoSelector: (state, action) => {
