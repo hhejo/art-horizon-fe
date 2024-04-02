@@ -13,7 +13,6 @@ import { toast } from "react-toastify";
 // import { piecesApi } from "../../api/api";
 
 // Component
-import { NavMini } from "../../components/NavMini";
 import LoginForm from "./LoginForm";
 
 const Login = () => {
@@ -53,7 +52,7 @@ const Login = () => {
 
   return (
     <>
-      <section className="relative">
+      <main className="relative">
         {/* 배경 이미지 */}
         <div
           className="absolute bg-gray-700 -z-50"
@@ -72,7 +71,7 @@ const Login = () => {
 
         {/* 로그인 폼 */}
         <LoginForm login={loginHandler} />
-      </section>
+      </main>
     </>
   );
 };

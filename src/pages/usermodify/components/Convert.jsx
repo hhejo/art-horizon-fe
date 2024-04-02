@@ -3,16 +3,16 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { getUser } from "../../../redux/user-slice";
+// import { getUser } from "../../../redux/user-slice";
 
 const Convert = () => {
   const dispatch = useDispatch();
-  const myType = useSelector((state) => state.auth.myUserType);
+  const myType = useSelector((state) => state.user.myUserType);
 
   const toggleHandler = () => {
     if (myType === "N") {
       // dispatch(changeType());
-      dispatch(getUser());
+      // dispatch(getUser());
       toast.success("성공적으로 화가로 전환했습니다.");
     }
   };

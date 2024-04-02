@@ -20,7 +20,7 @@ const Info = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { targetUserSeq } = useParams();
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn } = useSelector((state) => state.user.value);
   const [userData, setUserData] = useState(initialUserData);
   const [isFollowed, setIsFollowed] = useState(false); // 해당 사용자 팔로우 했는지 여부
 
