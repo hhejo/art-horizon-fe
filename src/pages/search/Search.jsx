@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaArrowDown, FaSpinner, FaHashtag } from "react-icons/fa";
 
 import { piecesApi } from "../../api/api";
-
-import NavBar from "../../components/NavBar";
 
 // const CARD_SIZE = 10;
 // const PAGE_SIZE = 10 * Math.ceil(visualViewport.width / CARD_SIZE);
@@ -176,8 +174,7 @@ const Search = () => {
   // };
 
   return (
-    <React.Fragment>
-      <NavBar />
+    <>
       <section className="" style={{ marginTop: "71px" }}>
         <div className="py-64 mx-auto">
           {/* 인트로 */}
@@ -367,7 +364,7 @@ const Search = () => {
           </section>
         </div>
       </section>
-    </React.Fragment>
+    </>
   );
 };
 

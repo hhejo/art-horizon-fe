@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 
 import Info from "./components/Info";
@@ -13,8 +12,7 @@ const UserModify = () => {
   const [selectedTab, setSelectedTab] = useState("기본정보 변경");
 
   return (
-    <React.Fragment>
-      <NavBar />
+    <>
       <section
         className="border-solid border-gray-50 border-b-2"
         style={{ marginTop: "71px", minHeight: "87.5vh" }}
@@ -80,7 +78,7 @@ const UserModify = () => {
         </div>
       </section>
       <Footer />
-    </React.Fragment>
+    </>
   );
 };
 

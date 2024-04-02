@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { login, getUser } from "../../redux/authSlice";
+import { login, getUser } from "../../redux/user-slice";
 
 const LoginForm = (props) => {
   const { login } = props;

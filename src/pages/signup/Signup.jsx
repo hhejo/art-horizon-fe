@@ -7,11 +7,11 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { collection, addDoc } from "firebase/firestore";
 import { auth, firestore } from "../../firebase";
 // Slice
-import { setCurrentUser } from "../../redux/authSlice";
+import { setCurrentUser } from "../../redux/user-slice";
 // Toast
 import { toast } from "react-toastify";
 // Component
-import NavBar2 from "../../components/NavBar2";
+import { NavMini } from "../../components/NavMini";
 import SignupForm from "./SignupForm";
 
 // import { piecesApi } from "../../api/api";
@@ -64,7 +64,6 @@ const Signup = () => {
 
   return (
     <>
-      <NavBar2 />
       <section className="relative">
         {/* 배경 이미지 */}
         <div

@@ -1,8 +1,7 @@
-import React, { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback } from "react";
 import axios from "axios";
 import { CgSpinner } from "react-icons/cg";
 
-import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import { toast } from "react-toastify";
 
@@ -143,8 +142,7 @@ const StyleTransfer = () => {
   };
 
   return (
-    <React.Fragment>
-      <NavBar />
+    <>
       <section
         className="text-gray-600 body-font border-solid border-gray-50 border-b-2"
         style={{ marginTop: "71px" }}
@@ -307,7 +305,7 @@ const StyleTransfer = () => {
         </div>
       </section>
       <Footer />
-    </React.Fragment>
+    </>
   );
 };
 

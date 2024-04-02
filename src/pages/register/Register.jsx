@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
 import { CgSpinner } from "react-icons/cg";
-
-import NavBar from "../../components/NavBar";
 
 const Register = () => {
   const myUserType = useSelector((state) => state.auth.myUserType);
@@ -233,8 +231,7 @@ const Register = () => {
   };
 
   return (
-    <React.Fragment>
-      <NavBar />
+    <>
       <section
         className="border-solid border-gray-50 border-b-2"
         style={{ marginTop: "71px", minHeight: "87.5vh" }}
@@ -455,7 +452,7 @@ const Register = () => {
           </div>
         </div>
       </section>
-    </React.Fragment>
+    </>
   );
 };
 

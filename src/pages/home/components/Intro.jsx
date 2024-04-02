@@ -5,9 +5,9 @@ import { toast } from "react-toastify";
 
 const Intro = () => {
   const navigate = useNavigate();
-  const { loggedIn } = useSelector((state) => state.auth.value);
+  const { isLoggedIn } = useSelector((state) => state.user.value);
   const goRegisterHandler = () => {
-    if (loggedIn) toast.info("로그인이 필요한 서비스입니다");
+    if (isLoggedIn) toast.info("로그인이 필요한 서비스입니다");
     navigate("/register");
   };
 

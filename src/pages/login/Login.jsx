@@ -6,14 +6,14 @@ import { useDispatch } from "react-redux";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 // Slice
-import { setCurrentUser } from "../../redux/authSlice";
+import { setCurrentUser } from "../../redux/user-slice";
 // Toast
 import { toast } from "react-toastify";
 
 // import { piecesApi } from "../../api/api";
 
 // Component
-import NavBar2 from "../../components/NavBar2";
+import { NavMini } from "../../components/NavMini";
 import LoginForm from "./LoginForm";
 
 const Login = () => {
@@ -53,7 +53,6 @@ const Login = () => {
 
   return (
     <>
-      <NavBar2 />
       <section className="relative">
         {/* 배경 이미지 */}
         <div

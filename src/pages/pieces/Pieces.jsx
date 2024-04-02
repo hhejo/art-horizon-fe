@@ -4,8 +4,6 @@ import { FaArrowDown, FaSpinner, FaSearch, FaHashtag } from "react-icons/fa";
 
 import { piecesApi, searchApi } from "../../api/api";
 
-import NavBar from "../../components/NavBar";
-
 // 높이 (총 32가지)
 const heights = [
   "h-1",
@@ -283,7 +281,6 @@ const Pieces = () => {
 
   return (
     <>
-      <NavBar />
       <section className="" style={{ marginTop: "71px" }}>
         <div className="py-64 mx-auto">
           {/* 인트로 */}

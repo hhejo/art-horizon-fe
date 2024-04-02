@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { changeProfile } from "../../../redux/authSlice";
+// import { changeProfile } from "../../../redux/user-slice";
 
 const Info = () => {
   const dispatch = useDispatch();
@@ -28,10 +28,10 @@ const Info = () => {
       userDesc: description,
     });
 
-    dispatch(changeProfile(profileData))
-      .unwrap()
-      .then(() => toast.success("성공적으로 변경되었습니다"))
-      .catch(() => toast.error("변경에 실패했습니다"));
+    // dispatch(changeProfile(profileData))
+    //   .unwrap()
+    //   .then(() => toast.success("성공적으로 변경되었습니다"))
+    //   .catch(() => toast.error("변경에 실패했습니다"));
   };
 
   return (

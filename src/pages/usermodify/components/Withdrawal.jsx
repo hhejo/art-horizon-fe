@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { quit } from "../../../redux/authSlice";
+// import { quit } from "../../../redux/user-slice";
 
 const Withdrawal = () => {
   const dispatch = useDispatch();
@@ -11,13 +11,13 @@ const Withdrawal = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(quit())
-      .unwrap()
-      .then(() => {
-        toast.success("성공적으로 회원 탈퇴했습니다");
-        navigate("/", { replace: true });
-      })
-      .catch(() => toast.error("회원탈퇴에 실패했습니다"));
+    // dispatch(quit())
+    //   .unwrap()
+    //   .then(() => {
+    //     toast.success("성공적으로 회원 탈퇴했습니다");
+    //     navigate("/", { replace: true });
+    //   })
+    //   .catch(() => toast.error("회원탈퇴에 실패했습니다"));
   };
 
   return (

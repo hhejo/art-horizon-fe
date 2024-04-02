@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { changeType, getUser } from "../../../redux/authSlice";
+import { getUser } from "../../../redux/user-slice";
 
 const Convert = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ const Convert = () => {
 
   const toggleHandler = () => {
     if (myType === "N") {
-      dispatch(changeType());
+      // dispatch(changeType());
       dispatch(getUser());
       toast.success("성공적으로 화가로 전환했습니다.");
     }

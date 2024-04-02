@@ -1,6 +1,5 @@
 import React from "react";
 
-import NavBar from "../../components/NavBar";
 import Intro from "./components/Intro";
 import Tags from "./components/Tags";
 import StyleTransfer from "./components/StyleTransfer";
@@ -12,8 +11,6 @@ import Footer from "../../components/Footer";
 const Home = () => {
   return (
     <React.Fragment>
-      {/* 내비게이션 바 */}
-      <NavBar />
       {/* 인트로 */}
       <Intro />
       {/* 태그 소개 */}

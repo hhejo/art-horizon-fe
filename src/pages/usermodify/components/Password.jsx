@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { changePassword } from "../../../redux/authSlice";
+// import { changePassword } from "../../../redux/user-slice";
 
 const Password = () => {
   const dispatch = useDispatch();
@@ -38,10 +38,10 @@ const Password = () => {
     setPassword1("");
     setPassword2("");
     setPassword3("");
-    dispatch(changePassword(passwordData))
-      .unwrap()
-      .then(() => toast.success("비밀번호 변경에 성공했습니다."))
-      .catch(() => toast.error("비밀번호 변경에 실패했습니다"));
+    // dispatch(changePassword(passwordData))
+    //   .unwrap()
+    //   .then(() => toast.success("비밀번호 변경에 성공했습니다."))
+    //   .catch(() => toast.error("비밀번호 변경에 실패했습니다"));
   };
 
   return (
