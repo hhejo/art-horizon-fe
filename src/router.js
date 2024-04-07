@@ -29,17 +29,20 @@ export const router = createBrowserRouter(
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
       </Route>
+
       {/* 로그인 O */}
       <Route element={<PrivateRoute />}>
         <Route path="usermodify" element={<UserModify />} />
         <Route path="register" element={<Register />} />
       </Route>
+
       {/* 로그인 상관 없음 */}
       <Route path="mypage/:targetDocId" element={<MyPage />} />
       <Route path="pieces" element={<Pieces />} />
       <Route path="piece" element={<Piece />} />
       <Route path="style" element={<StyleTransfer />} />
       <Route path="scent" element={<Scent />} />
+
       {/* 404 */}
       <Route path="*" element={<NotFound />} />
     </Route>
