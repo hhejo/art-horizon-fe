@@ -1,8 +1,8 @@
 # 아트 호라이즌 (Art Horizon)
 
-**[클릭해서 아트 호라이즌 배포 링크로 이동](https://art-horizon-fe.vercel.app/)**
+> **[클릭해서 아트 호라이즌 배포 링크로 이동](https://art-horizon-fe.vercel.app/)**
 
-![아트 호라이즌 프로젝트 화면](./images-readme/art-horizon-main-page.png)
+![아트 호라이즌 프로젝트 화면](./images-readme/000-art-horizon-main.png)
 
 ## 0. 목차
 
